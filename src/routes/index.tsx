@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
-import { ArrowUpRight, ArrowDown, Github, Linkedin, Mail, Phone, FileDown } from "lucide-react";
+import { ArrowUpRight, ArrowDown, GitBranch as Github, Link2 as Linkedin, Mail, Phone, FileDown } from "lucide-react";
 import portrait from "@/assets/hari-portrait.png.asset.json";
 import { Cursor, Magnetic, Reveal, SplitText } from "@/components/motion";
 import {
