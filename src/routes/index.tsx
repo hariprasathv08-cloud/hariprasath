@@ -89,7 +89,7 @@ function Hero() {
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          className="h-full w-full object-cover object-top opacity-40 grayscale md:opacity-70"
+          className="h-full w-full object-cover object-top opacity-40 grayscale md:opacity-55"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
@@ -103,10 +103,10 @@ function Hero() {
 
         <div>
           <motion.div style={{ y: y1 }}>
-            <SplitText as="h1" text={profile.firstName.toUpperCase()} className="display block text-[22vw] md:text-[17vw]" delay={0.2} />
+            <SplitText as="h1" text={profile.firstName.toUpperCase()} immediate className="display block text-[22vw] md:text-[17vw]" delay={0.2} />
           </motion.div>
           <motion.div style={{ y: y2 }} className="md:pl-[12vw]">
-            <SplitText text={profile.lastName.toUpperCase()} className="display text-outline block text-[22vw] md:text-[17vw]" delay={0.35} />
+            <SplitText text={profile.lastName.toUpperCase()} immediate className="display text-outline block text-[22vw] md:text-[17vw]" delay={0.35} />
           </motion.div>
         </div>
 

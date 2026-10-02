@@ -18,7 +18,7 @@ export function Reveal({ children, delay = 0, className }: { children: ReactNode
 }
 
 /** Splits text into masked lines/words that slide up. */
-export function SplitText({ text, className, delay = 0, as = "span" }: { text: string; className?: string; delay?: number; as?: "span" | "h1" | "h2" }) {
+export function SplitText({ text, className, delay = 0, as = "span", immediate = false }: { text: string; className?: string; delay?: number; as?: "span" | "h1" | "h2"; immediate?: boolean }) {
   const Tag = motion[as];
   const words = text.split(" ");
   return (
@@ -28,8 +28,7 @@ export function SplitText({ text, className, delay = 0, as = "span" }: { text: s
           <motion.span
             className="inline-block"
             initial={{ y: "110%" }}
-            whileInView={{ y: 0 }}
-            viewport={{ once: true }}
+            {...(immediate ? { animate: { y: 0 } } : { whileInView: { y: 0 }, viewport: { once: true } })}
             transition={{ duration: 1.1, ease, delay: delay + i * 0.07 }}
           >
             {w}
