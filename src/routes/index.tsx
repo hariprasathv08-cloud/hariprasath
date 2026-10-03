@@ -1,16 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
-import { ArrowUpRight, ArrowDown, GitBranch as Github, Link2 as Linkedin, Mail, Phone, FileDown } from "lucide-react";
+import { ArrowUpRight, ArrowDown, GitBranch as Github, Link2 as Linkedin, Mail, Phone, FileDown, Menu, X } from "lucide-react";
 import portrait from "@/assets/hari-portrait.png.asset.json";
 import { Cursor, Magnetic, Reveal, SplitText } from "@/components/motion";
+import { Button } from "@/components/ui/button";
 import {
   profile, links, projects, practice, skills, experience, education, certifications, type Project,
 } from "@/data/portfolio";
 
-const TITLE = "Hari Prasath | AI Security & Cybersecurity Portfolio";
+const TITLE = "Hari Prasath | SOC Analyst & Network Security Portfolio";
 const DESC =
-  "AI Security and Cybersecurity portfolio of Hari Prasath, focused on offensive security, LLM security, SIEM/XDR, Linux, Python, networking and security automation.";
+  "Hari Prasath’s SOC analyst, cybersecurity and network security portfolio featuring Network Tool, ThreatVision and security automation work.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,8 +28,8 @@ export const Route = createFileRoute("/")({
 });
 
 const nav = [
-  ["Work", "#work"], ["About", "#about"], ["Experience", "#experience"],
-  ["Certifications", "#certifications"], ["Contact", "#contact"],
+  ["Index", "#top"], ["Work", "#work"], ["About", "#about"],
+  ["Skills", "#skills"], ["Experience", "#experience"], ["Contact", "#contact"],
 ] as const;
 
 const isPlaceholder = (u: string) => u.startsWith("REPLACE_WITH");
@@ -52,12 +53,13 @@ function Index() {
 }
 
 function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <motion.header
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.9, delay: 0.3 }}
-      className="fixed inset-x-0 top-0 z-50 mix-blend-difference"
+      className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md"
     >
       <div className="flex items-center justify-between px-5 py-5 md:px-10">
         <a href="#top" className="display text-lg tracking-tight">HP<span className="text-signal">.</span></a>
@@ -66,8 +68,13 @@ function Header() {
             <a key={h} href={h} className="meta transition-colors hover:text-foreground">{l}</a>
           ))}
         </nav>
-        <a href="#contact" className="meta md:hidden">Menu</a>
+        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} aria-controls="mobile-navigation">
+          {menuOpen ? <X /> : <Menu />}
+        </Button>
       </div>
+      {menuOpen && <nav id="mobile-navigation" className="grid gap-0 border-t bg-background px-5 py-3 md:hidden" aria-label="Mobile navigation">
+        {nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="meta border-b py-4 text-foreground">{label}</a>)}
+      </nav>}
     </motion.header>
   );
 }
@@ -81,7 +88,7 @@ function Hero() {
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section id="top" ref={ref} className="relative min-h-[100svh] overflow-hidden px-5 pb-10 pt-28 md:px-10">
+    <section id="top" ref={ref} className="relative flex min-h-[82svh] flex-col overflow-hidden px-5 pb-8 pt-24 md:min-h-[86svh] md:px-10 md:pt-28">
       <motion.div style={{ y: imgY }} className="absolute right-0 top-0 h-full w-full md:w-[46%]">
         <motion.img
           src={portrait.url}
@@ -95,22 +102,22 @@ function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
       </motion.div>
 
-      <motion.div style={{ opacity: fade }} className="relative z-10 flex min-h-[calc(100svh-9rem)] flex-col justify-between">
+      <motion.div style={{ opacity: fade }} className="relative z-10 flex flex-1 flex-col justify-between gap-10">
         <div className="flex flex-wrap justify-between gap-4">
-          <span className="meta">Portfolio — {new Date().getFullYear()}</span>
-          <span className="meta">{profile.location}</span>
+          <span className="meta">Coimbatore / India</span>
+          <span className="meta">SOC • Network • Security</span>
         </div>
 
         <div>
           <motion.div style={{ y: y1 }}>
-            <SplitText as="h1" text={profile.firstName.toUpperCase()} immediate className="display block text-[22vw] md:text-[17vw]" delay={0.2} />
+            <SplitText as="h1" text={profile.firstName.toUpperCase()} immediate className="display block text-[21vw] md:text-[17vw]" delay={0.2} />
           </motion.div>
           <motion.div style={{ y: y2 }} className="md:pl-[12vw]">
-            <SplitText text={profile.lastName.toUpperCase()} immediate className="display text-outline block text-[22vw] md:text-[17vw]" delay={0.35} />
+            <SplitText text={profile.lastName.toUpperCase()} immediate className="display text-outline block text-[21vw] md:text-[17vw]" delay={0.35} />
           </motion.div>
         </div>
 
-        <div className="grid gap-8 border-t pt-6 md:grid-cols-12">
+        <div className="grid gap-5 border-t pt-5 md:grid-cols-12">
           <ul className="space-y-1 md:col-span-4">
             {profile.roles.map((r, i) => (
               <motion.li key={r} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.9 + i * 0.1 }}
@@ -127,9 +134,9 @@ function Hero() {
             <Magnetic href="#work" className="meta inline-flex items-center gap-2 bg-foreground px-5 py-3 text-background">
               View work <ArrowDown className="h-3 w-3" />
             </Magnetic>
-            <Magnetic href="#contact" className="meta inline-flex items-center gap-2 border border-foreground/40 px-5 py-3 text-foreground">
-              Contact
-            </Magnetic>
+            {!isPlaceholder(links.resume) && <Magnetic href={links.resume} download className="meta inline-flex items-center gap-2 border border-foreground/40 px-5 py-3 text-foreground">
+              Download resume <FileDown className="h-3 w-3" />
+            </Magnetic>}
           </div>
         </div>
       </motion.div>
@@ -139,7 +146,7 @@ function Hero() {
 
 function SectionHead({ index, label, title }: { index: string; label: string; title: string }) {
   return (
-    <div className="mb-16 grid gap-6 border-t pt-6 md:grid-cols-12">
+    <div className="mb-10 grid gap-5 border-t pt-6 md:mb-14 md:grid-cols-12">
       <span className="meta md:col-span-3">({index}) {label}</span>
       <SplitText as="h2" text={title} className="display text-5xl md:col-span-9 md:text-8xl" />
     </div>
@@ -148,8 +155,8 @@ function SectionHead({ index, label, title }: { index: string; label: string; ti
 
 function Work() {
   return (
-    <section id="work" className="px-5 py-32 md:px-10">
-      <SectionHead index="01" label="Selected Work" title="Things I've built to break & defend." />
+    <section id="work" className="px-5 pb-20 pt-12 md:px-10 md:pb-28 md:pt-16">
+      <SectionHead index="01" label="Selected Work" title="Selected work." />
       <div>
         {projects.map((p, i) => <ProjectRow key={p.id} p={p} flip={i % 2 === 1} />)}
       </div>
@@ -164,7 +171,7 @@ function ProjectRow({ p, flip }: { p: Project; flip: boolean }) {
   const [hover, setHover] = useState(false);
 
   return (
-    <article ref={ref} className="group grid gap-8 border-t py-14 md:grid-cols-12 md:gap-10 md:py-20"
+    <article ref={ref} className="group grid gap-6 border-t py-10 md:grid-cols-12 md:gap-10 md:py-16"
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} data-cursor>
       <Reveal className={`md:col-span-7 ${flip ? "md:order-2" : ""}`}>
         <div className="relative aspect-[16/10] overflow-hidden bg-surface">
@@ -174,7 +181,7 @@ function ProjectRow({ p, flip }: { p: Project; flip: boolean }) {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            <span className="display text-outline select-none text-[28vw] md:text-[16vw]">{p.id}</span>
+            <ProjectVisual id={p.id} />
           </motion.div>
           <motion.div
             className="absolute inset-x-0 bottom-0 h-px bg-signal"
@@ -183,7 +190,7 @@ function ProjectRow({ p, flip }: { p: Project; flip: boolean }) {
           <div className="absolute left-5 top-5 flex flex-wrap gap-2">
             {p.stack.slice(0, 3).map((s) => <span key={s} className="meta border bg-background/60 px-2 py-1 backdrop-blur">{s}</span>)}
           </div>
-          <span className="meta absolute bottom-5 right-5">{p.subtitle}</span>
+          <span className="meta absolute bottom-5 right-5 max-w-[65%] text-right">{p.subtitle}</span>
         </div>
       </Reveal>
 
@@ -193,13 +200,12 @@ function ProjectRow({ p, flip }: { p: Project; flip: boolean }) {
           <h3 className="display mt-4 text-5xl transition-transform duration-700 group-hover:translate-x-3 md:text-7xl">{p.title}</h3>
           <p className="mt-3 text-lg text-foreground/80">{p.subtitle}</p>
           <p className="mt-6 max-w-md leading-relaxed text-muted-foreground">{p.description}</p>
+          <p className="meta mt-6 max-w-md leading-relaxed">{p.features.join(" / ")}</p>
         </div>
         <div>
           <p className="meta mb-5">{p.stack.join(" · ")}</p>
           <div className="flex flex-wrap gap-x-6 gap-y-3 border-t pt-5">
-            <ProjectLink href={p.github} label="GitHub" />
-            <ProjectLink href={p.demo} label="Live demo" />
-            <ProjectLink href={p.caseStudy} label="Case study" />
+            {!isPlaceholder(p.github) && <ProjectLink href={p.github} label={p.id === "01" ? "View on GitHub" : "View source"} />}
           </div>
         </div>
       </div>
@@ -221,12 +227,12 @@ function ProjectLink({ href, label }: { href: string; label: string }) {
 function About() {
   const all = skills.flatMap((s) => s.items);
   return (
-    <section id="about" className="py-32">
+    <section id="about" className="py-20 md:py-28">
       <div className="px-5 md:px-10">
         <div className="grid gap-10 border-t pt-6 md:grid-cols-12">
           <div className="md:col-span-6">
             <span className="meta">(02) About</span>
-            <SplitText as="h2" text="Curious about how systems fail." className="display mt-8 block text-6xl md:text-8xl" />
+            <SplitText as="h2" text="Security. Networks. Intelligence." className="display mt-8 block text-6xl md:text-8xl" />
           </div>
           <div className="md:col-span-5 md:col-start-8 md:pt-24">
             <Reveal>
@@ -237,7 +243,7 @@ function About() {
         </div>
       </div>
 
-      <div className="my-24 space-y-4 overflow-hidden border-y py-8">
+      <div className="my-16 space-y-4 overflow-hidden border-y py-8 md:my-20">
         <div className="animate-marquee flex w-max gap-10 whitespace-nowrap">
           {[...all, ...all].map((s, i) => (
             <span key={i} className="display text-4xl md:text-6xl">{s}<span className="ml-10 text-signal">✶</span></span>
@@ -250,7 +256,7 @@ function About() {
         </div>
       </div>
 
-      <div className="grid gap-x-10 px-5 md:grid-cols-2 md:px-10 lg:grid-cols-3">
+      <div id="skills" className="grid scroll-mt-24 gap-x-10 px-5 md:grid-cols-2 md:px-10 lg:grid-cols-3">
         {skills.map((g, i) => (
           <Reveal key={g.group} delay={i * 0.05} className="border-t py-8">
             <span className="meta text-signal">{g.group}</span>
@@ -266,12 +272,13 @@ function About() {
 
 function Experience() {
   return (
-    <section id="experience" className="px-5 py-32 md:px-10">
+    <section id="experience" className="px-5 py-20 md:px-10 md:py-28">
       <SectionHead index="03" label="Experience & Education" title="Path so far." />
       <div className="relative md:ml-[25%]">
         <div className="absolute bottom-0 left-0 top-0 w-px bg-border" />
         {[
-          ...experience.map((e) => ({ k: "Experience", a: e.org, b: e.role, c: e.period })),
+          { k: "Practice", a: practice.title, b: practice.description, c: "" },
+          ...experience.map((e) => ({ k: "Experience", a: e.org, b: `${e.role} — ${e.details}`, c: e.period })),
           ...education.map((e) => ({ k: "Education", a: e.degree, b: `${e.school} — ${e.place}`, c: e.period })),
         ].map((row, i) => (
           <Reveal key={i} delay={i * 0.1} className="relative pb-16 pl-10">
@@ -288,7 +295,7 @@ function Experience() {
 
 function Certifications() {
   return (
-    <section id="certifications" className="px-5 py-32 md:px-10">
+    <section id="certifications" className="px-5 py-20 md:px-10 md:py-28">
       <SectionHead index="04" label="Certifications" title="Credentials." />
       <ul>
         {certifications.map((c, i) => (
@@ -307,13 +314,14 @@ function Certifications() {
 }
 
 function GitHubSection() {
-  const repos = [...projects.map((p) => ({ t: p.title, u: p.github })), { t: practice.title, u: practice.github }];
+  const repos = projects.filter((p) => !isPlaceholder(p.github)).map((p) => ({ t: p.title, u: p.github }));
   return (
-    <section id="github" className="px-5 py-32 md:px-10">
+    <section id="github" className="px-5 py-20 md:px-10 md:py-28">
       <div className="grid gap-10 border-t pt-6 md:grid-cols-12">
         <div className="md:col-span-5">
           <span className="meta">(05) Source</span>
           <h2 className="display mt-8 text-6xl md:text-8xl">Open<br />source.</h2>
+          <p className="mt-6 text-muted-foreground">Security tools, experiments and practical engineering.</p>
           <Magnetic href={links.github} target="_blank" rel="noreferrer"
             className="meta mt-10 inline-flex items-center gap-2 bg-foreground px-5 py-3 text-background">
             <Github className="h-4 w-4" /> View GitHub profile
@@ -342,8 +350,9 @@ function Contact() {
   return (
     <section id="contact" className="px-5 pb-10 pt-32 md:px-10">
       <span className="meta">(06) Contact</span>
-      <SplitText as="h2" text="LET'S CONNECT." className="display mt-8 block text-[17vw] md:text-[14vw]" />
-      <div className="mt-12 grid gap-10 border-t pt-10 md:grid-cols-12">
+      <SplitText as="h2" text="LET'S CONNECT." className="display mt-8 block text-[15vw] md:text-[12vw]" />
+      <p className="mt-6 text-lg text-muted-foreground">Open to entry-level SOC, cybersecurity and network security opportunities.</p>
+      <div className="mt-10 grid gap-8 border-t pt-8 md:grid-cols-12">
         <div className="md:col-span-6">
           <Magnetic href={`mailto:${profile.email}`}
             className="display inline-flex items-center gap-4 break-all text-2xl underline decoration-signal decoration-1 underline-offset-8 md:text-4xl">
@@ -353,10 +362,11 @@ function Contact() {
         <ul className="grid grid-cols-2 gap-4 md:col-span-6">
           {items.map(({ icon: Icon, label, href, download }) => {
             const pending = isPlaceholder(href);
+            if (pending) return null;
             return (
               <li key={label}>
-                <a href={pending ? undefined : href} target={download ? undefined : "_blank"} rel="noreferrer" download={download || undefined}
-                  className={`flex items-center justify-between border px-4 py-4 transition-colors ${pending ? "opacity-50" : "hover:border-signal hover:text-signal"}`}>
+                <a href={href} target={download || href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" download={download || undefined}
+                  className="flex min-h-14 items-center justify-between gap-2 border px-4 py-4 transition-colors hover:border-signal hover:text-signal">
                   <span className="flex items-center gap-3"><Icon className="h-4 w-4" />{label}</span>
                   <ArrowUpRight className="h-4 w-4" />
                 </a>
@@ -365,11 +375,71 @@ function Contact() {
           })}
         </ul>
       </div>
-      <footer className="mt-32 flex flex-wrap justify-between gap-4 border-t pt-6">
+      <footer className="mt-20 flex flex-wrap justify-between gap-4 border-t pt-6">
         <span className="meta">© {new Date().getFullYear()} Hari Prasath</span>
-        <span className="meta">{profile.location}</span>
+        <span className="meta">SOC • Network • Security</span>
         <a href="#top" className="meta hover:text-foreground">Back to top ↑</a>
       </footer>
     </section>
+  );
+}
+
+function NetworkVisual() {
+  return (
+    <div className="network-visual relative h-full w-full" aria-label="Abstract network topology visualization" role="img">
+      <svg viewBox="0 0 700 440" className="h-full w-full" aria-hidden="true">
+        <g className="network-links" fill="none" stroke="currentColor" strokeWidth="1">
+          <path d="M72 150 190 80 322 153 466 86 621 158 528 320 347 350 190 294 72 150M190 80 190 294M322 153 347 350M466 86 528 320M72 150 322 153M190 294 528 320M322 153 621 158" />
+        </g>
+        <g className="network-nodes" fill="currentColor">
+          {[[72,150],[190,80],[322,153],[466,86],[621,158],[528,320],[347,350],[190,294]].map(([x,y], i) => <g key={i}><circle cx={x} cy={y} r={i === 2 ? 11 : 5} /><circle cx={x} cy={y} r={i === 2 ? 24 : 13} fill="none" stroke="currentColor" strokeOpacity=".45" /></g>)}
+        </g>
+        <circle className="network-packet" cx="72" cy="150" r="4" fill="currentColor" />
+        <g className="network-labels" fill="currentColor" fontSize="10" fontFamily="monospace"><text x="78" y="134">192.168.1.01</text><text x="333" y="129">GATEWAY</text><text x="477" y="66">10.0.0.24</text><text x="535" y="345">TCP/IP</text></g>
+      </svg>
+    </div>
+  );
+}
+
+function ProjectVisual({ id }: { id: string }) {
+  if (id === "01") return <NetworkVisual />;
+
+  if (id === "02") return (
+    <div className="project-visual grid h-full w-full grid-cols-[1fr_2fr] gap-3 p-8 pt-20 text-foreground/70 md:p-12 md:pt-20" aria-label="Abstract security operations monitoring visual" role="img">
+      <div className="flex flex-col gap-3 border-r border-border pr-4">
+        <span className="meta text-signal">SOC / XDR</span>
+        {['EVENTS', 'PROCESSES', 'USB', 'FIREWALL', 'INTEGRITY'].map((item, i) => <span key={item} className="meta flex items-center gap-2 border-b py-2"><span className={i === 1 ? 'h-1.5 w-1.5 rounded-full bg-signal' : 'h-1.5 w-1.5 rounded-full bg-muted-foreground'} />{item}</span>)}
+      </div>
+      <div className="flex flex-col justify-between gap-4">
+        <div className="meta flex justify-between border-b pb-3"><span>SECURITY EVENTS</span><span>MONITORING</span></div>
+        <div className="flex h-24 items-end gap-1.5 border-b border-border pb-2 md:h-36">{[28,45,37,68,44,78,52,40,72,55,84,64,35,58,47,74,56,33].map((height, i) => <span key={i} className="min-w-0 flex-1 bg-signal/60" style={{ height: `${height}%` }} />)}</div>
+        <div className="meta flex justify-between"><span>ALERT CORRELATION</span><span>MITRE ATT&CK</span></div>
+      </div>
+    </div>
+  );
+
+  if (id === "03") return (
+    <div className="project-visual flex h-full w-full flex-col justify-center gap-4 p-8 pt-20 md:p-12 md:pt-20" aria-label="Abstract Linux firewall rules visual" role="img">
+      <div className="meta border-b pb-3 text-signal">$ UFW / FIREWALL CONTROL</div>
+      {['PORT MANAGEMENT', 'WEBSITE BLOCKING', 'SUSPICIOUS IP BLOCKING', 'SSH BRUTE-FORCE DETECTION'].map((rule, i) => <div key={rule} className="flex items-center justify-between gap-3 border-b border-border pb-2 font-mono text-[10px] text-foreground/70 md:text-xs"><span className="text-signal">0{i + 1}</span><span className="min-w-0 flex-1">{rule}</span><span className="text-muted-foreground">[ RULE ]</span></div>)}
+      <span className="meta mt-1">AUTOMATED FIREWALL RESPONSE _</span>
+    </div>
+  );
+
+  if (id === "04") return (
+    <div className="project-visual flex h-full w-full items-center px-7 pt-16 md:px-12" aria-label="Abstract AI-assisted workflow visual" role="img">
+      <div className="w-full">
+        <div className="meta mb-7 text-signal">AI-ASSISTED WORKFLOW</div>
+        <div className="grid grid-cols-3 items-center gap-2 md:gap-4">{['INVOICE', 'GEMINI API', 'WORKFLOW'].map((item, i) => <div key={item} className="relative flex aspect-square items-center justify-center border border-border bg-background/70 p-2 text-center font-mono text-[9px] text-foreground/80 md:text-xs">{item}{i < 2 && <span className="absolute -right-3 z-10 text-signal md:-right-5">→</span>}</div>)}</div>
+        <div className="meta mt-7 flex justify-between border-t pt-4"><span>JWT AUTH</span><span>REST API</span><span>FALLBACK</span></div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="project-visual flex h-full w-full flex-col justify-center gap-3 p-8 pt-20 md:p-12 md:pt-20" aria-label="Abstract support ticket workflow visual" role="img">
+      <span className="meta mb-2 text-signal">SUPPORT / TICKET FLOW</span>
+      {['TICKET INTAKE', 'PRIORITY HANDLING', 'ASSIGNMENT', 'RESOLUTION TRACKING'].map((step, i) => <div key={step} className="flex items-center gap-4 border-b border-border py-2"><span className="meta text-signal">0{i + 1}</span><span className="font-mono text-[10px] text-foreground/80 md:text-sm">{step}</span><span className="ml-auto text-signal">↗</span></div>)}
+    </div>
   );
 }

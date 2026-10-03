@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep portfolio content and verified external destinations in the shared data module; this prevents invented links or duplicated copy across sections.
+- Keep decorative network imagery as a code-rendered abstraction rather than a fabricated project screenshot; it represents the project without misrepresenting its interface.
