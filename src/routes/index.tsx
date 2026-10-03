@@ -181,7 +181,7 @@ function ProjectRow({ p, flip }: { p: Project; flip: boolean }) {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            {p.id === "01" ? <NetworkVisual /> : <span className="display text-outline select-none text-[28vw] md:text-[16vw]">{p.id}</span>}
+            <ProjectVisual id={p.id} />
           </motion.div>
           <motion.div
             className="absolute inset-x-0 bottom-0 h-px bg-signal"
@@ -397,6 +397,49 @@ function NetworkVisual() {
         <circle className="network-packet" cx="72" cy="150" r="4" fill="currentColor" />
         <g className="network-labels" fill="currentColor" fontSize="10" fontFamily="monospace"><text x="78" y="134">192.168.1.01</text><text x="333" y="129">GATEWAY</text><text x="477" y="66">10.0.0.24</text><text x="535" y="345">TCP/IP</text></g>
       </svg>
+    </div>
+  );
+}
+
+function ProjectVisual({ id }: { id: string }) {
+  if (id === "01") return <NetworkVisual />;
+
+  if (id === "02") return (
+    <div className="project-visual grid h-full w-full grid-cols-[1fr_2fr] gap-3 p-8 pt-20 text-foreground/70 md:p-12 md:pt-20" aria-label="Abstract security operations monitoring visual" role="img">
+      <div className="flex flex-col gap-3 border-r border-border pr-4">
+        <span className="meta text-signal">SOC / XDR</span>
+        {['EVENTS', 'PROCESSES', 'USB', 'FIREWALL', 'INTEGRITY'].map((item, i) => <span key={item} className="meta flex items-center gap-2 border-b py-2"><span className={i === 1 ? 'h-1.5 w-1.5 rounded-full bg-signal' : 'h-1.5 w-1.5 rounded-full bg-muted-foreground'} />{item}</span>)}
+      </div>
+      <div className="flex flex-col justify-between gap-4">
+        <div className="meta flex justify-between border-b pb-3"><span>SECURITY EVENTS</span><span>MONITORING</span></div>
+        <div className="flex h-24 items-end gap-1.5 border-b border-border pb-2 md:h-36">{[28,45,37,68,44,78,52,40,72,55,84,64,35,58,47,74,56,33].map((height, i) => <span key={i} className="min-w-0 flex-1 bg-signal/60" style={{ height: `${height}%` }} />)}</div>
+        <div className="meta flex justify-between"><span>ALERT CORRELATION</span><span>MITRE ATT&CK</span></div>
+      </div>
+    </div>
+  );
+
+  if (id === "03") return (
+    <div className="project-visual flex h-full w-full flex-col justify-center gap-4 p-8 pt-20 md:p-12 md:pt-20" aria-label="Abstract Linux firewall rules visual" role="img">
+      <div className="meta border-b pb-3 text-signal">$ UFW / FIREWALL CONTROL</div>
+      {['PORT MANAGEMENT', 'WEBSITE BLOCKING', 'SUSPICIOUS IP BLOCKING', 'SSH BRUTE-FORCE DETECTION'].map((rule, i) => <div key={rule} className="flex items-center justify-between gap-3 border-b border-border pb-2 font-mono text-[10px] text-foreground/70 md:text-xs"><span className="text-signal">0{i + 1}</span><span className="min-w-0 flex-1">{rule}</span><span className="text-muted-foreground">[ RULE ]</span></div>)}
+      <span className="meta mt-1">AUTOMATED FIREWALL RESPONSE _</span>
+    </div>
+  );
+
+  if (id === "04") return (
+    <div className="project-visual flex h-full w-full items-center px-7 pt-16 md:px-12" aria-label="Abstract AI-assisted workflow visual" role="img">
+      <div className="w-full">
+        <div className="meta mb-7 text-signal">AI-ASSISTED WORKFLOW</div>
+        <div className="grid grid-cols-3 items-center gap-2 md:gap-4">{['INVOICE', 'GEMINI API', 'WORKFLOW'].map((item, i) => <div key={item} className="relative flex aspect-square items-center justify-center border border-border bg-background/70 p-2 text-center font-mono text-[9px] text-foreground/80 md:text-xs">{item}{i < 2 && <span className="absolute -right-3 z-10 text-signal md:-right-5">→</span>}</div>)}</div>
+        <div className="meta mt-7 flex justify-between border-t pt-4"><span>JWT AUTH</span><span>REST API</span><span>FALLBACK</span></div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="project-visual flex h-full w-full flex-col justify-center gap-3 p-8 pt-20 md:p-12 md:pt-20" aria-label="Abstract support ticket workflow visual" role="img">
+      <span className="meta mb-2 text-signal">SUPPORT / TICKET FLOW</span>
+      {['TICKET INTAKE', 'PRIORITY HANDLING', 'ASSIGNMENT', 'RESOLUTION TRACKING'].map((step, i) => <div key={step} className="flex items-center gap-4 border-b border-border py-2"><span className="meta text-signal">0{i + 1}</span><span className="font-mono text-[10px] text-foreground/80 md:text-sm">{step}</span><span className="ml-auto text-signal">↗</span></div>)}
     </div>
   );
 }

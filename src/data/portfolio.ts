@@ -49,7 +49,7 @@ export const projects: Project[] = [
     features: ["Port management", "Website blocking", "Suspicious IP blocking", "SSH brute-force detection", "Automated firewall response"], github: PENDING,
   },
   {
-    id: "04", title: "VertexERP AI", subtitle: "AI-Assisted ERP",
+    id: "04", title: "VertexERP AI", subtitle: "AI / LLM Security",
     description: "An ERP platform with AI-assisted workflows powered by the Gemini API, built on a FastAPI backend with secure API design.",
     stack: ["Python", "FastAPI", "SQLite", "Gemini API", "JWT", "REST APIs"],
     features: ["AI-assisted workflows", "Invoice processing", "REST APIs", "JWT authentication", "Fallback handling"], github: PENDING,

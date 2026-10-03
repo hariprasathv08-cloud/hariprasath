@@ -119,6 +119,7 @@
 /* Preserve the editorial scale without leaving oversized empty bands. */
 section { scroll-margin-top: 4.5rem; }
 .network-visual { color: var(--signal); }
+.project-visual { background: color-mix(in oklab, var(--surface) 90%, var(--background)); }
 .network-links { opacity: .45; }
 .network-labels { opacity: .7; letter-spacing: .08em; }
 .network-packet { offset-path: path("M72 150 L190 80 L322 153 L466 86 L621 158 L528 320 L347 350 L190 294 L72 150"); animation: packet-travel 12s linear infinite; }
