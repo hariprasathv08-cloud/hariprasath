@@ -1,0 +1,3 @@
+- [ ] Fix first-screen and section spacing on desktop and mobile.
+- [ ] Align existing portfolio copy, project order, and verified links with the supplied brief.
+- [ ] Check rendering, interaction, overflow, and links.
