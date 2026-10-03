@@ -115,3 +115,15 @@
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @utility animate-marquee { animation: marquee 40s linear infinite; }
 @utility animate-marquee-slow { animation: marquee 60s linear infinite reverse; }
+
+/* Preserve the editorial scale without leaving oversized empty bands. */
+section { scroll-margin-top: 4.5rem; }
+.network-visual { color: var(--signal); }
+.network-links { opacity: .45; }
+.network-labels { opacity: .7; letter-spacing: .08em; }
+.network-packet { offset-path: path("M72 150 L190 80 L322 153 L466 86 L621 158 L528 320 L347 350 L190 294 L72 150"); animation: packet-travel 12s linear infinite; }
+@keyframes packet-travel { to { offset-distance: 100%; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee, .animate-marquee-slow, .network-packet { animation: none; }
+}
