@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
-import { ArrowUpRight, ArrowDown, GitBranch as Github, Link2 as Linkedin, Mail, Phone, FileDown } from "lucide-react";
+import { ArrowUpRight, ArrowDown, GitBranch as Github, Link2 as Linkedin, Mail, Phone, FileDown, Menu, X } from "lucide-react";
 import portrait from "@/assets/hari-portrait.png.asset.json";
 import { Cursor, Magnetic, Reveal, SplitText } from "@/components/motion";
+import { Button } from "@/components/ui/button";
 import {
   profile, links, projects, practice, skills, experience, education, certifications, type Project,
 } from "@/data/portfolio";
@@ -52,6 +53,7 @@ function Index() {
 }
 
 function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <motion.header
       initial={{ y: -40, opacity: 0 }}
@@ -66,8 +68,13 @@ function Header() {
             <a key={h} href={h} className="meta transition-colors hover:text-foreground">{l}</a>
           ))}
         </nav>
-        <a href="#work" className="meta md:hidden">Work ↓</a>
+        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} aria-controls="mobile-navigation">
+          {menuOpen ? <X /> : <Menu />}
+        </Button>
       </div>
+      {menuOpen && <nav id="mobile-navigation" className="grid gap-0 border-t bg-background px-5 py-3 md:hidden" aria-label="Mobile navigation">
+        {nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="meta border-b py-4 text-foreground">{label}</a>)}
+      </nav>}
     </motion.header>
   );
 }
@@ -81,7 +88,7 @@ function Hero() {
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section id="top" ref={ref} className="relative flex min-h-[90svh] flex-col overflow-hidden px-5 pb-8 pt-24 md:min-h-[94svh] md:px-10 md:pt-28">
+    <section id="top" ref={ref} className="relative flex min-h-[82svh] flex-col overflow-hidden px-5 pb-8 pt-24 md:min-h-[86svh] md:px-10 md:pt-28">
       <motion.div style={{ y: imgY }} className="absolute right-0 top-0 h-full w-full md:w-[46%]">
         <motion.img
           src={portrait.url}
@@ -148,7 +155,7 @@ function SectionHead({ index, label, title }: { index: string; label: string; ti
 
 function Work() {
   return (
-    <section id="work" className="px-5 py-20 md:px-10 md:py-28">
+    <section id="work" className="px-5 pb-20 pt-12 md:px-10 md:pb-28 md:pt-16">
       <SectionHead index="01" label="Selected Work" title="Selected work." />
       <div>
         {projects.map((p, i) => <ProjectRow key={p.id} p={p} flip={i % 2 === 1} />)}
@@ -358,8 +365,8 @@ function Contact() {
             if (pending) return null;
             return (
               <li key={label}>
-                <a href={pending ? undefined : href} target={download ? undefined : "_blank"} rel="noreferrer" download={download || undefined}
-                  className={`flex items-center justify-between border px-4 py-4 transition-colors ${pending ? "opacity-50" : "hover:border-signal hover:text-signal"}`}>
+                <a href={href} target={download || href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" download={download || undefined}
+                  className="flex min-h-14 items-center justify-between gap-2 border px-4 py-4 transition-colors hover:border-signal hover:text-signal">
                   <span className="flex items-center gap-3"><Icon className="h-4 w-4" />{label}</span>
                   <ArrowUpRight className="h-4 w-4" />
                 </a>

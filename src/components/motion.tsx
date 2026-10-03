@@ -27,8 +27,8 @@ export function SplitText({ text, className, delay = 0, as = "span", immediate =
         <span key={i} className="inline-block overflow-hidden pb-[0.08em] align-bottom" aria-hidden>
           <motion.span
             className="inline-block"
-            initial={{ y: "110%" }}
-            {...(immediate ? { animate: { y: 0 } } : { whileInView: { y: 0 }, viewport: { once: true } })}
+            initial={{ y: immediate ? "110%" : 0 }}
+            {...(immediate ? { animate: { y: 0 } } : {})}
             transition={{ duration: 1.1, ease, delay: delay + i * 0.07 }}
           >
             {w}
@@ -49,7 +49,8 @@ export function Magnetic({ children, className, ...rest }: HTMLMotionProps<"a"> 
       ref={ref}
       style={{ x, y }}
       onMouseMove={(e) => {
-        const r = ref.current!.getBoundingClientRect();
+        const r = ref.current?.getBoundingClientRect();
+        if (!r) return;
         x.set((e.clientX - r.left - r.width / 2) * 0.3);
         y.set((e.clientY - r.top - r.height / 2) * 0.3);
       }}
