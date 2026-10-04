@@ -17,6 +17,8 @@ export const links = {
   github: "https://github.com/hariprasathv08-cloud",
   linkedin: "https://www.linkedin.com/in/hari-prasath-v-b22075326/",
   resume: "/resume.pdf",
+  email: "mailto:hariprasathv08@gmail.com",
+  phone: "tel:+916369113681",
 };
 
 export type Project = {
@@ -27,6 +29,8 @@ export type Project = {
   stack: string[];
   features: string[];
   github: string;
+  /** Live demo URL — leave empty until a real one exists. */
+  demo?: string;
 };
 
 export const projects: Project[] = [
