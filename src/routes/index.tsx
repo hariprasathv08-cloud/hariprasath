@@ -10,7 +10,7 @@ import {
   profile, links, projects, practice, skills, experience, education, certifications, type Project,
 } from "@/data/portfolio";
 
-const TITLE = "Hari Prasath | SOC Analyst & Network Security Portfolio";
+const TITLE = "Hari Prasath | SOC Analyst & Cybersecurity Developer";
 const DESC =
   "Hari Prasath’s SOC analyst, Juniour cybersecurity  Analyst and network security portfolio featuring Network Tool, ThreatVision and security automation work.";
 
