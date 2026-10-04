@@ -53,7 +53,11 @@ function renderPreviewPlugin(): Plugin {
         const contentType = mimeTypes[ext] || "application/octet-stream";
 
         fs.readFile(filePath, (err, data) => {
-          if (err) return next(err);
+          if (err) {
+            res.statusCode = 500;
+            res.end("Static Read Error: " + err.message);
+            return;
+          }
           res.statusCode = 200;
           res.setHeader("Content-Type", contentType);
           res.setHeader("Access-Control-Allow-Origin", "*");
