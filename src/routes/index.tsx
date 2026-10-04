@@ -5,6 +5,7 @@ import { ArrowUpRight, ArrowDown, GitBranch as Github, Link2 as Linkedin, Mail, 
 import portrait from "@/assets/hari-portrait.png.asset.json";
 import { Cursor, Magnetic, Reveal, SplitText } from "@/components/motion";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   profile, links, projects, practice, skills, experience, education, certifications, type Project,
 } from "@/data/portfolio";
@@ -32,7 +33,12 @@ const nav = [
   ["Skills", "#skills"], ["Experience", "#experience"], ["Contact", "#contact"],
 ] as const;
 
-const isPlaceholder = (u: string) => u.startsWith("REPLACE_WITH");
+const isPlaceholder = (u?: string) => !u || u.startsWith("REPLACE_WITH");
+const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
+const socials = [
+  { label: "GitHub", href: links.github, icon: Github },
+  { label: "LinkedIn", href: links.linkedin, icon: Linkedin },
+];
 
 function Index() {
   return (
@@ -68,12 +74,20 @@ function Header() {
             <a key={h} href={h} className="meta transition-colors hover:text-foreground">{l}</a>
           ))}
         </nav>
+        <div className="hidden items-center gap-5 lg:flex">
+          {socials.map((l) => <a key={l.label} href={l.href} {...ext} className="meta transition-colors hover:text-signal">{l.label}</a>)}
+          <a href={links.resume} download className="meta border border-foreground/40 px-3 py-1.5 text-foreground transition-colors hover:border-signal hover:text-signal">Resume</a>
+        </div>
         <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} aria-controls="mobile-navigation">
           {menuOpen ? <X /> : <Menu />}
         </Button>
       </div>
       {menuOpen && <nav id="mobile-navigation" className="grid gap-0 border-t bg-background px-5 py-3 md:hidden" aria-label="Mobile navigation">
         {nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="meta border-b py-4 text-foreground">{label}</a>)}
+        <div className="flex gap-6 py-4">
+          {socials.map((l) => <a key={l.label} href={l.href} {...ext} className="meta text-foreground">{l.label}</a>)}
+          <a href={links.resume} download className="meta text-foreground">Resume</a>
+        </div>
       </nav>}
     </motion.header>
   );
@@ -137,6 +151,10 @@ function Hero() {
             {!isPlaceholder(links.resume) && <Magnetic href={links.resume} download className="meta inline-flex items-center gap-2 border border-foreground/40 px-5 py-3 text-foreground">
               Download resume <FileDown className="h-3 w-3" />
             </Magnetic>}
+            <div className="flex w-full gap-5 md:justify-end">
+              {socials.map((l) => <a key={l.label} href={l.href} {...ext} className="meta inline-flex items-center gap-1.5 hover:text-signal"><l.icon className="h-3 w-3" />{l.label}</a>)}
+              <a href={links.email} className="meta inline-flex items-center gap-1.5 hover:text-signal"><Mail className="h-3 w-3" />Email</a>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -169,6 +187,7 @@ function ProjectRow({ p, flip }: { p: Project; flip: boolean }) {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
   const [hover, setHover] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <article ref={ref} className="group grid gap-6 border-t py-10 md:grid-cols-12 md:gap-10 md:py-16"
@@ -205,21 +224,45 @@ function ProjectRow({ p, flip }: { p: Project; flip: boolean }) {
         <div>
           <p className="meta mb-5">{p.stack.join(" · ")}</p>
           <div className="flex flex-wrap gap-x-6 gap-y-3 border-t pt-5">
-            {!isPlaceholder(p.github) && <ProjectLink href={p.github} label={p.id === "01" ? "View on GitHub" : "View source"} />}
+            <button type="button" onClick={() => setOpen(true)} className="meta inline-flex items-center gap-1 text-foreground transition-colors hover:text-signal">View project <ArrowUpRight className="h-3 w-3" /></button>
+            {isPlaceholder(p.github)
+              ? <span className="meta opacity-60">Source code coming soon</span>
+              : <ProjectLink href={p.github} label="View GitHub repository" github />}
+            {!isPlaceholder(p.demo) && <ProjectLink href={p.demo!} label="Live demo" />}
           </div>
         </div>
       </div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-h-[90svh] overflow-y-auto rounded-none border-border bg-background sm:max-w-2xl">
+          <DialogHeader>
+            <span className="meta text-signal">{p.id} / 05 — {p.subtitle}</span>
+            <DialogTitle className="display text-4xl md:text-6xl">{p.title}</DialogTitle>
+            <DialogDescription className="sr-only">{p.subtitle} project details</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div><p className="meta mb-2">Overview</p><p className="leading-relaxed text-muted-foreground">{p.description}</p></div>
+            <div><p className="meta mb-2">Key features</p><ul className="grid gap-1 sm:grid-cols-2">{p.features.map((f) => <li key={f} className="border-b py-2 text-sm">{f}</li>)}</ul></div>
+            <div><p className="meta mb-2">Technologies</p><p className="text-sm">{p.stack.join(" · ")}</p></div>
+            <div className="flex flex-wrap gap-3 border-t pt-5">
+              {isPlaceholder(p.github)
+                ? <span className="meta opacity-60">Source code coming soon</span>
+                : <a href={p.github} {...ext} className="meta inline-flex items-center gap-2 bg-foreground px-5 py-3 text-background"><Github className="h-4 w-4" />View GitHub repository</a>}
+              {!isPlaceholder(p.demo) && <a href={p.demo} {...ext} className="meta inline-flex items-center gap-2 border border-foreground/40 px-5 py-3">Live demo <ArrowUpRight className="h-3 w-3" /></a>}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </article>
   );
 }
 
-function ProjectLink({ href, label }: { href: string; label: string }) {
+function ProjectLink({ href, label, github }: { href: string; label: string; github?: boolean }) {
   const pending = isPlaceholder(href);
   return (
-    <a href={pending ? undefined : href} target="_blank" rel="noreferrer" aria-disabled={pending}
+    <a href={pending ? undefined : href} target="_blank" rel="noopener noreferrer" aria-disabled={pending}
       title={pending ? "Link coming soon" : undefined}
       className={`meta inline-flex items-center gap-1 transition-colors ${pending ? "cursor-not-allowed opacity-50" : "text-foreground hover:text-signal"}`}>
-      {label} <ArrowUpRight className="h-3 w-3" />
+      {github && <Github className="h-3 w-3" />}{label} <ArrowUpRight className="h-3 w-3" />
     </a>
   );
 }
@@ -322,16 +365,16 @@ function GitHubSection() {
           <span className="meta">(05) Source</span>
           <h2 className="display mt-8 text-6xl md:text-8xl">Open<br />source.</h2>
           <p className="mt-6 text-muted-foreground">Security tools, experiments and practical engineering.</p>
-          <Magnetic href={links.github} target="_blank" rel="noreferrer"
+          <Magnetic href={links.github} target="_blank" rel="noopener noreferrer"
             className="meta mt-10 inline-flex items-center gap-2 bg-foreground px-5 py-3 text-background">
-            <Github className="h-4 w-4" /> View GitHub profile
+            <Github className="h-4 w-4" /> View my GitHub
           </Magnetic>
         </div>
         <ul className="md:col-span-6 md:col-start-7">
           {repos.map((r) => (
             <li key={r.t} className="flex items-center justify-between border-b py-5">
               <span className="text-lg">{r.t}</span>
-              <ProjectLink href={r.u} label="Source" />
+              <ProjectLink href={r.u} label="View source" github />
             </li>
           ))}
         </ul>
@@ -342,7 +385,7 @@ function GitHubSection() {
 
 function Contact() {
   const items = [
-    { icon: Phone, label: profile.phone, href: `tel:${profile.phone.replace(/\s/g, "")}` },
+    { icon: Phone, label: profile.phone, href: links.phone },
     { icon: Github, label: "GitHub", href: links.github },
     { icon: Linkedin, label: "LinkedIn", href: links.linkedin },
     { icon: FileDown, label: "Resume", href: links.resume, download: true },
@@ -354,7 +397,7 @@ function Contact() {
       <p className="mt-6 text-lg text-muted-foreground">Open to entry-level SOC, cybersecurity and network security opportunities.</p>
       <div className="mt-10 grid gap-8 border-t pt-8 md:grid-cols-12">
         <div className="md:col-span-6">
-          <Magnetic href={`mailto:${profile.email}`}
+          <Magnetic href={links.email}
             className="display inline-flex items-center gap-4 break-all text-2xl underline decoration-signal decoration-1 underline-offset-8 md:text-4xl">
             <Mail className="h-7 w-7 shrink-0" /> {profile.email}
           </Magnetic>
@@ -365,7 +408,7 @@ function Contact() {
             if (pending) return null;
             return (
               <li key={label}>
-                <a href={href} target={download || href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" download={download || undefined}
+                <a href={href} target={download || href.startsWith("tel:") ? undefined : "_blank"} rel="noopener noreferrer" download={download || undefined}
                   className="flex min-h-14 items-center justify-between gap-2 border px-4 py-4 transition-colors hover:border-signal hover:text-signal">
                   <span className="flex items-center gap-3"><Icon className="h-4 w-4" />{label}</span>
                   <ArrowUpRight className="h-4 w-4" />
@@ -377,7 +420,11 @@ function Contact() {
       </div>
       <footer className="mt-20 flex flex-wrap justify-between gap-4 border-t pt-6">
         <span className="meta">© {new Date().getFullYear()} Hari Prasath</span>
-        <span className="meta">SOC • Network • Security</span>
+        <span className="meta">SOC Analyst • Cybersecurity • Network Security</span>
+        <span className="flex gap-5">
+          {socials.map((l) => <a key={l.label} href={l.href} {...ext} className="meta hover:text-foreground">{l.label}</a>)}
+          <a href={links.email} className="meta hover:text-foreground">Email</a>
+        </span>
         <a href="#top" className="meta hover:text-foreground">Back to top ↑</a>
       </footer>
     </section>
