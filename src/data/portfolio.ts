@@ -5,7 +5,7 @@ export const profile = {
   firstName: "Hari",
   lastName: "Prasath",
   title: "Entry-Level SOC Analyst | Cybersecurity & Network Security",
-  roles: ["SOC Analyst", "Cybersecurity", "Network Security"],
+  roles: ["SOC Analyst", "Junior Cybersecurity Analyst ", "Network Security", "AI Security"]
   location: "Coimbatore, Tamil Nadu, India",
   email: "hariprasathv08@gmail.com",
   phone: "+91 6369113681",
@@ -63,6 +63,14 @@ export const projects: Project[] = [
     description: "A ticketing system for IT support teams to log, assign and resolve issues with a clear, auditable workflow.",
     stack: ["Python", "Flask", "SQLite", "JavaScript"],
     features: ["Ticket assignment", "Priority handling", "Resolution tracking"], github: "https://github.com/hariprasathv08-cloud/SupportFlow",
+  },
+  {
+    id: "06", title: "ScholarMind AI", subtitle: "AI • Full Stack • EdTech",
+    description: "AI-powered learning platform that helps students study smarter with PDF understanding, AI summaries, study chat, quiz generation, smart flashcards, and personalized study planning.",
+    stack: ["React", "TypeScript", "Python", "FastAPI", "SQLite", "AI / LLM"],
+    features: ["PDF upload & document understanding", "AI document summarization", "AI Study Chat", "Automatic quiz generation", "Smart flashcards", "Personalized study planner", "Google OAuth authentication", "Responsive dashboard interface"],
+    github: "https://github.com/hariprasathv08-cloud/ScholarMind-AI",
+    demo: "https://scholarmind-ai.onrender.com",
   },
 ];
 

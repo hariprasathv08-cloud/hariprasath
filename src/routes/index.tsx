@@ -215,7 +215,7 @@ function ProjectRow({ p, flip }: { p: Project; flip: boolean }) {
 
       <div className={`flex flex-col justify-between gap-8 md:col-span-5 ${flip ? "md:order-1" : ""}`}>
         <div>
-          <span className="meta text-signal">{p.id} / 05</span>
+          <span className="meta text-signal">{p.id} / {projects.length < 10 ? `0${projects.length}` : projects.length}</span>
           <h3 className="display mt-4 text-5xl transition-transform duration-700 group-hover:translate-x-3 md:text-7xl">{p.title}</h3>
           <p className="mt-3 text-lg text-foreground/80">{p.subtitle}</p>
           <p className="mt-6 max-w-md leading-relaxed text-muted-foreground">{p.description}</p>
@@ -235,7 +235,7 @@ function ProjectRow({ p, flip }: { p: Project; flip: boolean }) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[90svh] overflow-y-auto rounded-none border-border bg-background sm:max-w-2xl">
           <DialogHeader>
-            <span className="meta text-signal">{p.id} / 05 — {p.subtitle}</span>
+            <span className="meta text-signal">{p.id} / {projects.length < 10 ? `0${projects.length}` : projects.length} — {p.subtitle}</span>
             <DialogTitle className="display text-4xl md:text-6xl">{p.title}</DialogTitle>
             <DialogDescription className="sr-only">{p.subtitle} project details</DialogDescription>
           </DialogHeader>
@@ -483,10 +483,22 @@ function ProjectVisual({ id }: { id: string }) {
     </div>
   );
 
-  return (
+  if (id === "05") return (
     <div className="project-visual flex h-full w-full flex-col justify-center gap-3 p-8 pt-20 md:p-12 md:pt-20" aria-label="Abstract support ticket workflow visual" role="img">
       <span className="meta mb-2 text-signal">SUPPORT / TICKET FLOW</span>
       {['TICKET INTAKE', 'PRIORITY HANDLING', 'ASSIGNMENT', 'RESOLUTION TRACKING'].map((step, i) => <div key={step} className="flex items-center gap-4 border-b border-border py-2"><span className="meta text-signal">0{i + 1}</span><span className="font-mono text-[10px] text-foreground/80 md:text-sm">{step}</span><span className="ml-auto text-signal">↗</span></div>)}
+    </div>
+  );
+
+  return (
+    <div className="project-visual flex h-full w-full flex-col justify-center gap-4 p-8 pt-20 md:p-12 md:pt-20" aria-label="Abstract ScholarMind AI learning platform visual" role="img">
+      <div className="meta border-b pb-3 text-signal">SCHOLARMIND AI / EDTECH</div>
+      <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+        <div className="border border-border bg-background/70 p-2"><span className="text-signal block text-[10px]">DOCUMENT</span>PDF ENGINE</div>
+        <div className="border border-border bg-background/70 p-2"><span className="text-signal block text-[10px]">AI STUDY</span>SUMMARIES & CHAT</div>
+        <div className="border border-border bg-background/70 p-2"><span className="text-signal block text-[10px]">QUIZ & CARDS</span>FLASHCARDS</div>
+      </div>
+      <div className="meta mt-2 flex justify-between border-t pt-3"><span>REACT + FASTAPI</span><span>SQLITE</span><span>GOOGLE OAUTH</span></div>
     </div>
   );
 }
