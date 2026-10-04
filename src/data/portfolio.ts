@@ -15,8 +15,8 @@ export const profile = {
 
 export const links = {
   github: "https://github.com/hariprasathv08-cloud",
-  linkedin: "REPLACE_WITH_LINKEDIN_URL",
-  resume: "REPLACE_WITH_RESUME_URL",
+  linkedin: "https://www.linkedin.com/in/hari-prasath-v-b22075326/",
+  resume: "/resume.pdf",
 };
 
 export type Project = {
@@ -46,19 +46,19 @@ export const projects: Project[] = [
     id: "03", title: "Secure-FW", subtitle: "Linux Firewall Automation",
     description: "Automates hardening and rule management for UFW on Linux hosts, turning repetitive firewall configuration into a repeatable workflow.",
     stack: ["Bash", "Linux", "UFW"],
-    features: ["Port management", "Website blocking", "Suspicious IP blocking", "SSH brute-force detection", "Automated firewall response"], github: PENDING,
+    features: ["Port management", "Website blocking", "Suspicious IP blocking", "SSH brute-force detection", "Automated firewall response"], github: "https://github.com/hariprasathv08-cloud/SECURE-FW",
   },
   {
     id: "04", title: "VertexERP AI", subtitle: "AI / LLM Security",
     description: "An ERP platform with AI-assisted workflows powered by the Gemini API, built on a FastAPI backend with secure API design.",
     stack: ["Python", "FastAPI", "SQLite", "Gemini API", "JWT", "REST APIs"],
-    features: ["AI-assisted workflows", "Invoice processing", "REST APIs", "JWT authentication", "Fallback handling"], github: PENDING,
+    features: ["AI-assisted workflows", "Invoice processing", "REST APIs", "JWT authentication", "Fallback handling"], github: "https://github.com/hariprasathv08-cloud/VertexERP-AI",
   },
   {
     id: "05", title: "SupportFlow IT", subtitle: "IT Support / Ticketing",
     description: "A ticketing system for IT support teams to log, assign and resolve issues with a clear, auditable workflow.",
     stack: ["Python", "Flask", "SQLite", "JavaScript"],
-    features: ["Ticket assignment", "Priority handling", "Resolution tracking"], github: PENDING,
+    features: ["Ticket assignment", "Priority handling", "Resolution tracking"], github: "https://github.com/hariprasathv08-cloud/SupportFlow",
   },
 ];
 
