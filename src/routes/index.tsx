@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import { ArrowUpRight, ArrowDown, GitBranch as Github, Link2 as Linkedin, Mail, Phone, FileDown, Menu, X } from "lucide-react";
-import portrait from "@/assets/hari-portrait.png.asset.json";
+import portraitImg from "@/assets/hari-portrait.jpg";
 import { Cursor, Magnetic, Reveal, SplitText } from "@/components/motion";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -12,7 +12,7 @@ import {
 
 const TITLE = "Hari Prasath | SOC Analyst & Network Security Portfolio";
 const DESC =
-  "Hari Prasath’s SOC analyst, cybersecurity and network security portfolio featuring Network Tool, ThreatVision and security automation work.";
+  "Hari Prasath’s SOC analyst, Juniour cybersecurity  Analyst and network security portfolio featuring Network Tool, ThreatVision and security automation work.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -102,18 +102,18 @@ function Hero() {
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section id="top" ref={ref} className="relative flex min-h-[82svh] flex-col overflow-hidden px-5 pb-8 pt-24 md:min-h-[86svh] md:px-10 md:pt-28">
-      <motion.div style={{ y: imgY }} className="absolute right-0 top-0 h-full w-full md:w-[46%]">
+    <section id="top" ref={ref} className="relative flex min-h-[85svh] flex-col overflow-hidden px-5 pb-8 pt-28 md:min-h-[88svh] md:px-10 md:pt-32">
+      <motion.div style={{ y: imgY }} className="absolute right-0 top-0 h-full w-full md:w-[48%] lg:w-[44%]">
         <motion.img
-          src={portrait.url}
+          src={portraitImg}
           alt="Portrait of Hari Prasath"
-          initial={{ opacity: 0, scale: 1.1 }}
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          className="h-full w-full object-cover object-top opacity-40 grayscale md:opacity-55"
+          className="h-full w-full object-cover object-top grayscale contrast-125 brightness-95 opacity-65 md:opacity-80"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/20" />
       </motion.div>
 
       <motion.div style={{ opacity: fade }} className="relative z-10 flex flex-1 flex-col justify-between gap-10">
@@ -439,7 +439,7 @@ function NetworkVisual() {
           <path d="M72 150 190 80 322 153 466 86 621 158 528 320 347 350 190 294 72 150M190 80 190 294M322 153 347 350M466 86 528 320M72 150 322 153M190 294 528 320M322 153 621 158" />
         </g>
         <g className="network-nodes" fill="currentColor">
-          {[[72,150],[190,80],[322,153],[466,86],[621,158],[528,320],[347,350],[190,294]].map(([x,y], i) => <g key={i}><circle cx={x} cy={y} r={i === 2 ? 11 : 5} /><circle cx={x} cy={y} r={i === 2 ? 24 : 13} fill="none" stroke="currentColor" strokeOpacity=".45" /></g>)}
+          {[[72, 150], [190, 80], [322, 153], [466, 86], [621, 158], [528, 320], [347, 350], [190, 294]].map(([x, y], i) => <g key={i}><circle cx={x} cy={y} r={i === 2 ? 11 : 5} /><circle cx={x} cy={y} r={i === 2 ? 24 : 13} fill="none" stroke="currentColor" strokeOpacity=".45" /></g>)}
         </g>
         <circle className="network-packet" cx="72" cy="150" r="4" fill="currentColor" />
         <g className="network-labels" fill="currentColor" fontSize="10" fontFamily="monospace"><text x="78" y="134">192.168.1.01</text><text x="333" y="129">GATEWAY</text><text x="477" y="66">10.0.0.24</text><text x="535" y="345">TCP/IP</text></g>
@@ -459,7 +459,7 @@ function ProjectVisual({ id }: { id: string }) {
       </div>
       <div className="flex flex-col justify-between gap-4">
         <div className="meta flex justify-between border-b pb-3"><span>SECURITY EVENTS</span><span>MONITORING</span></div>
-        <div className="flex h-24 items-end gap-1.5 border-b border-border pb-2 md:h-36">{[28,45,37,68,44,78,52,40,72,55,84,64,35,58,47,74,56,33].map((height, i) => <span key={i} className="min-w-0 flex-1 bg-signal/60" style={{ height: `${height}%` }} />)}</div>
+        <div className="flex h-24 items-end gap-1.5 border-b border-border pb-2 md:h-36">{[28, 45, 37, 68, 44, 78, 52, 40, 72, 55, 84, 64, 35, 58, 47, 74, 56, 33].map((height, i) => <span key={i} className="min-w-0 flex-1 bg-signal/60" style={{ height: `${height}%` }} />)}</div>
         <div className="meta flex justify-between"><span>ALERT CORRELATION</span><span>MITRE ATT&CK</span></div>
       </div>
     </div>

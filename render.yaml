@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: exact-match-portfolio
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npx vite preview --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
