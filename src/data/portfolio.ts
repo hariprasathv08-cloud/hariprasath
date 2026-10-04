@@ -58,7 +58,7 @@ export const projects: Project[] = [
     id: "05", title: "SupportFlow IT", subtitle: "IT Support / Ticketing",
     description: "A ticketing system for IT support teams to log, assign and resolve issues with a clear, auditable workflow.",
     stack: ["Python", "Flask", "SQLite", "JavaScript"],
-    features: ["Ticket assignment", "Priority handling", "Resolution tracking"], github: PENDING,
+    features: ["Ticket assignment", "Priority handling", "Resolution tracking"], github: "https://github.com/hariprasathv08-cloud/SupportFlow",
   },
 ];
 
