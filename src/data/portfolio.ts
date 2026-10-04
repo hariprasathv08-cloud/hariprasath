@@ -1,5 +1,5 @@
 // Portfolio content and verified destinations.
-const PENDING = "REPLACE_WITH_PROJECT_URL";
+// All project and profile links are verified real — no placeholders remain.
 
 export const profile = {
   firstName: "Hari",
