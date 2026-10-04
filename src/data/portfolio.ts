@@ -5,7 +5,7 @@ export const profile = {
   firstName: "Hari",
   lastName: "Prasath",
   title: "Entry-Level SOC Analyst | Cybersecurity & Network Security",
-  roles: ["SOC Analyst", "Junior Cybersecurity Analyst ", "Network Security", "AI Security"]
+  roles: ["SOC Analyst", "Junior Cybersecurity Analyst", "Network Security", "AI Security"],
   location: "Coimbatore, Tamil Nadu, India",
   email: "hariprasathv08@gmail.com",
   phone: "+91 6369113681",
