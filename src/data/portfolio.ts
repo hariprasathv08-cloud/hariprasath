@@ -40,7 +40,7 @@ export const projects: Project[] = [
     id: "02", title: "ThreatVision", subtitle: "SIEM / XDR",
     description: "A real-time monitoring platform that collects Windows security events and supports alert investigation from a single console.",
     stack: ["Python", "Flask", "SQLite", "JavaScript", "Windows Security APIs"],
-    features: ["Windows event monitoring", "Process monitoring", "USB detection", "Firewall monitoring", "File integrity monitoring", "Alert correlation", "Device telemetry", "MITRE ATT&CK mapping"], github: PENDING,
+    features: ["Windows event monitoring", "Process monitoring", "USB detection", "Firewall monitoring", "File integrity monitoring", "Alert correlation", "Device telemetry", "MITRE ATT&CK mapping"], github: "https://github.com/hariprasathv08-cloud/ThreatVision",
   },
   {
     id: "03", title: "Secure-FW", subtitle: "Linux Firewall Automation",
