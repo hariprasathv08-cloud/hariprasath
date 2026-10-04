@@ -52,7 +52,7 @@ export const projects: Project[] = [
     id: "04", title: "VertexERP AI", subtitle: "AI / LLM Security",
     description: "An ERP platform with AI-assisted workflows powered by the Gemini API, built on a FastAPI backend with secure API design.",
     stack: ["Python", "FastAPI", "SQLite", "Gemini API", "JWT", "REST APIs"],
-    features: ["AI-assisted workflows", "Invoice processing", "REST APIs", "JWT authentication", "Fallback handling"], github: PENDING,
+    features: ["AI-assisted workflows", "Invoice processing", "REST APIs", "JWT authentication", "Fallback handling"], github: "https://github.com/hariprasathv08-cloud/VertexERP-AI",
   },
   {
     id: "05", title: "SupportFlow IT", subtitle: "IT Support / Ticketing",
