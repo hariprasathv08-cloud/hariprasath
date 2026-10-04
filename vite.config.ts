@@ -8,7 +8,10 @@ export default defineConfig({
   },
   vite: {
     preview: {
-      allowedHosts: ["hariprasathv-portfolio.onrender.com"],
+      allowedHosts: true,
+    },
+    server: {
+      allowedHosts: true,
     },
   },
 });
