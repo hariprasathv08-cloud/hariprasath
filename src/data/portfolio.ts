@@ -15,8 +15,8 @@ export const profile = {
 
 export const links = {
   github: "https://github.com/hariprasathv08-cloud",
-  linkedin: "REPLACE_WITH_LINKEDIN_URL",
-  resume: "REPLACE_WITH_RESUME_URL",
+  linkedin: "https://www.linkedin.com/in/hari-prasath-v-b22075326/",
+  resume: "/resume.pdf",
 };
 
 export type Project = {
