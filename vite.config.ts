@@ -4,9 +4,7 @@ export default defineConfig({
   tanstackStart: {
     spa: { enabled: true },
   },
-  nitro: {
-    preset: "node-server",
-  },
+  nitro: false,
   vite: {
     preview: {
       host: "0.0.0.0",

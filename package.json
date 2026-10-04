@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build && node scripts/postbuild.js",
     "build:dev": "vite build --mode development",
-    "preview": "serve .output/public -s",
-    "start": "serve .output/public -s",
+    "preview": "serve dist/client -s",
+    "start": "serve dist/client -s",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
