@@ -12,6 +12,14 @@ for (const target of targets) {
   }
 }
 
+// Mirror index.html to dist/index.html for default vite preview / static root lookup
+const clientIndexPath = path.resolve('dist/client/index.html');
+const distIndexPath = path.resolve('dist/index.html');
+if (fs.existsSync(clientIndexPath)) {
+  fs.copyFileSync(clientIndexPath, distIndexPath);
+  console.log(`[postbuild] Copied ${clientIndexPath} -> ${distIndexPath}`);
+}
+
 // Generate fallback standalone Node server for .output/server/index.mjs
 const serverDir = path.resolve('.output/server');
 if (!fs.existsSync(serverDir)) {
@@ -29,10 +37,12 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.resolve(__dirname, '../../dist/client');
 const ALT_PUBLIC_DIR = path.resolve(__dirname, '../public');
+const DIST_PUBLIC_DIR = path.resolve(__dirname, '../../dist');
 
 function getPublicDir() {
   if (fs.existsSync(PUBLIC_DIR)) return PUBLIC_DIR;
   if (fs.existsSync(ALT_PUBLIC_DIR)) return ALT_PUBLIC_DIR;
+  if (fs.existsSync(DIST_PUBLIC_DIR)) return DIST_PUBLIC_DIR;
   return __dirname;
 }
 
@@ -58,7 +68,7 @@ const server = http.createServer((req, res) => {
   const fallbackFile = path.join(activePublicDir, 'index.html');
   const altFallbackFile = path.join(activePublicDir, '_shell.html');
 
-  let filePath = path.join(activePublicDir, req.url.split('?')[0]);
+  let filePath = path.join(activePublicDir, (req.url || '/').split('?')[0]);
   if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
     filePath = path.join(filePath, 'index.html');
   }
@@ -73,7 +83,7 @@ const server = http.createServer((req, res) => {
   fs.readFile(filePath, (err, content) => {
     if (err) {
       res.writeHead(500, { 'Content-Type': 'text/plain' });
-      res.end('Internal Server Error');
+      res.end('Internal Server Error: ' + err.message);
       return;
     }
     res.writeHead(200, {
