@@ -46,7 +46,7 @@ export const projects: Project[] = [
     id: "03", title: "Secure-FW", subtitle: "Linux Firewall Automation",
     description: "Automates hardening and rule management for UFW on Linux hosts, turning repetitive firewall configuration into a repeatable workflow.",
     stack: ["Bash", "Linux", "UFW"],
-    features: ["Port management", "Website blocking", "Suspicious IP blocking", "SSH brute-force detection", "Automated firewall response"], github: PENDING,
+    features: ["Port management", "Website blocking", "Suspicious IP blocking", "SSH brute-force detection", "Automated firewall response"], github: "https://github.com/hariprasathv08-cloud/SECURE-FW",
   },
   {
     id: "04", title: "VertexERP AI", subtitle: "AI / LLM Security",
